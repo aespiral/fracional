@@ -35,6 +35,10 @@ int mdc(int m, int n) {
     return sor;
 }
 
+int mmc(int m, int n) {
+    return m * (n / mdc(m, n));
+}
+
 // calcula quantos algarismos tem a representacao decimal de n
 int largura_dec(int n) {
     int aux = n;
@@ -82,6 +86,18 @@ void normalizar(struct fr f) {
     res.nu = f.nu/d; res.de = f.de/d;
 }
 
+// seria:
+// struct fr somar(struct fr f, struct fr g)
+void somar(struct fr f, struct fr g) {
+    int d = mmc(f.de, g.de);
+
+    struct fr aux;
+    aux.nu = (f.nu * d) / f.de + (g.nu * d) / g.de;
+    aux.de = d;
+
+    normalizar(aux);
+}
+
 int main() {
     printf("O M.D.C. de 144 e 96 eh %d\n", mdc(144,96));
     printf("O M.D.C. de 3 e 2 eh %d\n", mdc(2,3));
@@ -102,4 +118,10 @@ int main() {
     
     normalizar(f1);
     pprint(res);
+
+    struct fr f3; f3.nu = 1; f3.de = 6;
+    struct fr f4; f4.nu = 2; f4.de = 9;
+    somar(f3, f4);
+    struct fr f5; f5.nu = res.nu; f5.de = res.de;
+    pprint(f5);
 }
