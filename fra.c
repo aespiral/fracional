@@ -69,20 +69,25 @@ void pprint(struct fr f) {
 bool normalizada(struct fr f) {
     return mdc(f.nu, f.de) == 1;
 }
+
 /*
- * Corresponde a
- * if (mdc(f.nu, f.de) == 1) 
- *    return true;
- * else
- *     return false;
+ * Funcoes sobre fracoes
  */
+struct fr res; // variavel global para improvisar retorno de fracoes
+
+// seria:
+// struct fr normalizar(struct fr f)
+void normalizar(struct fr f) {
+    int d = mdc(f.nu,f.de);
+    res.nu = f.nu/d; res.de = f.de/d;
+}
 
 int main() {
     printf("O M.D.C. de 144 e 96 eh %d\n", mdc(144,96));
     printf("O M.D.C. de 3 e 2 eh %d\n", mdc(2,3));
 
     struct fr f1; f1.nu = 6; f1.de = 9; 
-    pprint(f1); // Exercicio: criar procedimento para 5 linhas daqui para baixo
+    pprint(f1); 
     if (normalizada(f1))
         puts("A fracao eh normalizada\n");
     else
@@ -95,4 +100,6 @@ int main() {
     else
         puts("A fracao não eh normalizada\n");
     
+    normalizar(f1);
+    pprint(res);
 }
